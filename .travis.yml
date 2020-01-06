@@ -1,0 +1,27 @@
+sudo: required
+services: 
+  - docker
+
+
+before_install:
+  - docker build -t sameera/react-test -f ./client/Dockerfile.dev ./client
+
+scripts:
+
+  - docker run sameera/react-test npm test -- --coverage
+
+after_success:
+  - docker build -t sameera/multi-client ./client
+  - docker build -t sameera/multi-nginx ./nginx
+  - docker build -t sameera/multi-server ./server
+  - docker build -t sameera/multi-worker ./worker
+
+
+# Push them to the docker hub
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+
+  - docker push sameera/multi-client ./client
+  - docker push sameera/multi-nginx ./nginx
+  - docker push sameera/multi-server ./server
+  - docker push sameera/multi-worker ./worker
+
