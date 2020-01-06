@@ -33,9 +33,9 @@ deploy:
   bucket_path: docker-multi
   on:
     branch: master
-  access_key_id: $AWS_ACCESS_KEY
+  access_key_id: "AKIAVPY2A3GGCQVUVXF6"
   secret_access_key: 
-    secure: $AWS_SECRET_KEY
+    secure: "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"
 
   
   
